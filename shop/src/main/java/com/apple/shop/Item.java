@@ -11,17 +11,19 @@ public class Item {
     private String title;
     private Integer price;
 
-    public Long getId() {
-        return id;
-    }
-
+    public Long getId() { return id; }
     public String getTitle() {
         return title;
     }
-
     public Integer getPrice() {
         return price;
     }
 
+    public Item(){
 
+    }
+    public Item(String title, Integer price){
+        this.title = title;
+        this.price = price;
+    }
 }
