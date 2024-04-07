@@ -20,6 +20,7 @@ public class BasicController {
     String about() {
         return "정보";
     }
+
     @GetMapping("/date")
     @ResponseBody
     String date() {
