@@ -16,9 +16,39 @@
     <img src="https://placehold.co/300">
     <div>
         <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
-        <p th:text="${item.price + '원'}"></p>
+        <p th:text="${item.price} + '원'"></p>
+        <button th:onclick="|location.href='/edit/' + ${item.id}|">수정</button>
+        <button class="deletePost" th:data-id="${item.id}">삭제(post요청)</button>
+        <button th:onclick="fetch('/deletePost1?id=[[${item.id}]]', {method:'DELETE'})
+        .then(r => r.text())
+        .then(r => {
+            location.reload();
+        })
+        ">delete요청</button>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.deletePost').forEach((button) => {
+        button.addEventListener('click',(e)=>{
+            const id = button.getAttribute('data-id');
+            fetch('/deletePost', {
+                method : 'POST',
+                headers : {'Content-Type' : 'application/json'},
+                body : JSON.stringify({id:id})
+            }).then(r => r.text())
+            .then(result => {
+                location.reload();
+            })
+            .catch(error => {
+                console.error('에러: ',error);
+            })
+        })
+    })
+
+
+
+</script>
 
 </body>
 </html>
