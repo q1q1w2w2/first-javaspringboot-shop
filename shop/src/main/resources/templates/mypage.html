@@ -12,13 +12,20 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
-<h3>글 작성</h3>
+<h3>마이페이지</h3>
 
-<form action="/add" method="POST">
-    <input name="title" placeholder="title">
-    <input name="price" placeholder="price">
-    <button type="submit">전송</button>
-</form>
+<h4 th:text="'username: '+ ${username}"></h4>
+
+<div sec:authentication="principal"></div>
+<div sec:authorize="hasAuthority('관리자')">
+    <h4>이 유저는 관리자</h4>
+</div>
+<div sec:authorize="hasAuthority('일반유저')">
+    <h4>이 유저는 일반유저</h4>
+</div>
+<div sec:authorize="isAnonymous()">
+    <h4>로그인 후 이용 가능</h4>
+</div>
 
 </body>
 </html>

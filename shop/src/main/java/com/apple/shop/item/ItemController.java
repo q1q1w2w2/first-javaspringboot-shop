@@ -2,6 +2,7 @@ package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +27,20 @@ public class ItemController {
     }
 
     @GetMapping("/write")
-    String wirte() {
-        return "write.html";
+    String write(Authentication auth) {
+        if(auth!=null){
+            return "write.html";
+        }
+        return "redirect:/list";
     }
 
     @PostMapping("/add")
-    String addPost(String title, Integer price) {
-        itemService.saveItem(title, price);
+    String addPost(String title, Integer price, Authentication auth) {
+        if(auth!=null && auth.isAuthenticated()){
+            String username = auth.getName();
+            itemService.saveItem(title, price, username);
+        }
+        itemService.saveItem(title, price, null);
         return "redirect:/list";
 
 

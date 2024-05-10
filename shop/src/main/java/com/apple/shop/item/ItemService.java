@@ -2,6 +2,7 @@ package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,10 +14,11 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price){
+    public void saveItem(String title, Integer price, String username){
         Item item = new Item();
         item.setTitle(title);
         item.setPrice(price);
+        item.setUsername(username);
         itemRepository.save(item);
     }
 

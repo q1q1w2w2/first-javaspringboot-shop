@@ -17,8 +17,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public CsrfTokenRepository csrfTokenRepository() {
+//        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+//        repository.setHeaderName("X-XSRF-TOKEN");
+//        return repository;
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository())
+//                .ignoringRequestMatchers("/login")
+//        );
         http.csrf((csrf)->csrf.disable());
         http.authorizeHttpRequests((authorize) ->
                 authorize.requestMatchers("/**").permitAll()
@@ -26,6 +36,10 @@ public class SecurityConfig {
 
         http.formLogin((formLogin) ->
                 formLogin.loginPage("/login").defaultSuccessUrl("/list")
+        );
+
+        http.logout(logout ->
+                logout.logoutUrl("/logout")
         );
 
         return http.build();

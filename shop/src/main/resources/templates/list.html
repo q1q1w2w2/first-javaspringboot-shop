@@ -17,6 +17,7 @@
     <div>
         <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
         <p th:text="${item.price} + '원'"></p>
+        <p th:text="'판매자: ' + ${item.username}"></p>
         <button th:onclick="|location.href='/edit/' + ${item.id}|">수정</button>
         <button class="deletePost" th:data-id="${item.id}">삭제(post요청)</button>
         <button th:onclick="fetch('/deletePost1?id=[[${item.id}]]', {method:'DELETE'})
